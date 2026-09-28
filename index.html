@@ -204,7 +204,7 @@
   <div class="main-wrapper">
     <main class="article-box">
       <span class="badge" id="edit-badge">PHÁP LUẬT</span>
-      <h1 class="title" id="edit-title">SỐC: Phát hiện đối tượng nghi vấn chuyên ăn giật đồ ăn của bạn cùng phòng</h1>
+      <h1 class="title" id="edit-title">Đang tải dữ liệu...</h1>
       
       <div class="meta-info">
         <div>Đăng bởi <strong id="edit-author">Phóng viên Thường Trực</strong> | <span id="pub-time"></span></div>
@@ -212,16 +212,14 @@
       </div>
 
       <div class="summary" id="edit-summary">
-        Cơ quan chức năng tại khu vực vừa ghi nhận sự việc hy hữu liên quan đến hành vi biến mất bí ẩn của các phần đồ ăn trong tủ lạnh.
+        Đang tải tóm tắt...
       </div>
 
       <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800" id="main-img" alt="Hình ảnh bài viết" class="cover-img">
-      <div class="img-caption" id="edit-caption">Hình ảnh đối tượng bị camera bắt gặp tại hiện trường lúc 2h sáng.</div>
+      <div class="img-caption" id="edit-caption">Đang tải chú thích...</div>
 
       <div class="content" id="edit-content">
-        <p>Theo thông tin ban đầu, vào khoảng thời gian gần đây, người dân liên tục phản ánh về việc đồ ăn mua về chưa kịp ăn đã "không cánh mà bay".</p>
-        <blockquote id="edit-quote">"Tôi vừa để ly trà sữa ở đây 5 phút trước, ngoảnh đi ngoảnh lại đã thấy trống trơn!" - Một nhân chứng bức xúc chia sẻ.</blockquote>
-        <p>Các lực lượng chức năng đang tiếp tục làm rõ hành vi và có biện pháp xử lý thích đáng đối với cá nhân có liên quan.</p>
+        <p>Đang tải nội dung bài viết từ máy chủ...</p>
       </div>
     </main>
 
@@ -251,16 +249,17 @@
   </footer>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzUVE59xYqojtx0WCGctYxbBoOaPIWNOIzc2fx8uyMzq6a3NDiRQ7zZ9tHBHcWIAxn6/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbx1-VlKk35urmSgKIzVrMuQC7V2vnJRS0dPfQ5jKM1ZqSzupjaeZ-daFyoh9dXBjW33/exec";
 
     const now = new Date();
     document.getElementById('current-date').innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('pub-time').innerText = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ' hôm nay';
 
-    // Đọc ngầm dữ liệu từ Google Sheets
+    // Đọc dữ liệu từ Google Sheets (Chống Cache bằng timestamp)
     async function fetchBackgroundData() {
       try {
-        const res = await fetch(API_URL);
+        const noCacheUrl = API_URL + "?t=" + Date.now();
+        const res = await fetch(noCacheUrl, { cache: 'no-store' });
         const data = await res.json();
 
         if (data.title) document.getElementById('edit-title').innerText = data.title;
@@ -271,12 +270,12 @@
         if (data.badge) document.getElementById('edit-badge').innerText = data.badge;
         if (data.author) document.getElementById('edit-author').innerText = data.author;
       } catch (err) {
-        console.log("Đã áp dụng dữ liệu tĩnh mặc định:", err);
+        console.log("Lỗi tải dữ liệu hoặc chưa có dữ liệu:", err);
       }
     }
     fetchBackgroundData();
 
-    // Nhấp 4 lần liên tiếp vào logo "TIN TỨC 24H"
+    // Bấm 4 lần liên tiếp vào logo để mở Admin Mode
     let logoClickCount = 0;
     let logoClickTimer = null;
     document.getElementById('logo-trigger').addEventListener('click', () => {
@@ -301,7 +300,7 @@
       alert("🔓 Mở chế độ Admin thành công!\nBạn có thể nhấp chuột trực tiếp vào nội dung để chỉnh sửa.");
     }
 
-    // Chuyển ảnh máy sang chuỗi nhị phân mã hóa (Base64 JPEG)
+    // Chuyển ảnh máy sang nhị phân mã hóa Base64
     function handleBinaryImageUpload(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -325,7 +324,7 @@
 
             const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75);
             document.getElementById('main-img').src = compressedBase64;
-            alert("📸 Đã chuyển đổi ảnh sang dạng nhị phân thành công!");
+            alert("📸 Đã nén và chuyển đổi ảnh sang dạng nhị phân thành công!");
           };
           img.src = e.target.result;
         };
@@ -333,10 +332,10 @@
       }
     }
 
-    // Gửi toàn bộ dữ liệu lên Google Sheets
+    // Gửi dữ liệu lên Google Sheets
     async function saveAndExit() {
       const saveBtn = document.getElementById('save-btn');
-      saveBtn.innerText = "Đang lưu...";
+      saveBtn.innerText = "Đang lưu lên Google Sheets...";
       saveBtn.disabled = true;
 
       const payload = {
@@ -352,6 +351,7 @@
       try {
         await fetch(API_URL, {
           method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
 
@@ -363,9 +363,10 @@
         document.getElementById('admin-bar').classList.remove('active');
         document.body.classList.remove('editing');
 
-        alert("🌐 Đã lưu bài viết và ảnh thành công lên Google Sheets!");
+        alert("🌐 Đã lưu thành công! Đã tự động cập nhật dữ liệu mới nhất.");
+        fetchBackgroundData();
       } catch (err) {
-        alert("Lỗi khi kết nối đến Google Sheets!");
+        alert("Lỗi kết nối khi gửi dữ liệu!");
       } finally {
         saveBtn.innerText = "Lưu lên Google Sheets & Khóa";
         saveBtn.disabled = false;
