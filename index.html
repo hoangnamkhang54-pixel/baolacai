@@ -87,7 +87,7 @@
     .nav-container a { color: #334155; text-decoration: none; font-weight: 600; font-size: 14px; padding: 12px 0; }
     .nav-container a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
 
-    /* Content Layout */
+    /* Layout chính */
     .main-wrapper {
       max-width: 1100px; margin: 20px auto; padding: 0 20px;
       display: grid; grid-template-columns: 1fr 320px; gap: 30px;
@@ -103,7 +103,7 @@
     .cover-img { width: 100%; max-height: 480px; object-fit: cover; border-radius: 6px; display: block; }
     .img-caption { font-size: 13px; color: #64748b; font-style: italic; text-align: center; margin: 8px 0 20px 0; }
 
-    /* Khung Video 16:9 */
+    /* Khung Video YouTube chuẩn 16:9 */
     .video-wrapper {
       position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
       overflow: hidden; border-radius: 8px; background: #000; margin-bottom: 20px; display: none;
@@ -147,7 +147,7 @@
   </div>
 
   <header>
-    <!-- Nhấp 4 lần liên tiếp vào logo để mở trang Admin -->
+    <!-- Bấm 4 lần liên tiếp vào logo để mở Admin Mode -->
     <div class="logo" id="logo-trigger">TIN TỨC <span>24H</span></div>
     <div style="font-size:13px; color:#64748b;">Nhiệt độ: 26°C | Hà Nội</div>
   </header>
@@ -174,11 +174,11 @@
 
       <div class="summary" id="edit-summary">Đang tải tóm tắt...</div>
 
-      <!-- Ảnh bài viết -->
+      <!-- Ảnh chính bài viết -->
       <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800" id="main-img" alt="Hình ảnh bài viết" class="cover-img">
       <div class="img-caption" id="edit-caption">Đang tải chú thích...</div>
 
-      <!-- Khung Video YouTube -->
+      <!-- Khung Video YouTube Nhúng -->
       <div class="video-wrapper" id="video-box">
         <iframe id="youtube-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
@@ -200,18 +200,27 @@
   </footer>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycby2wjZp-Bs5U6JUPhfSe69QKZ4g6pMNLu-CtzO6sIAyeg3LGIZpyO9MH3mN5pAJJ-cW5w/exec";
+    // URL Google Apps Script mới nhất
+    const API_URL = "https://script.google.com/macros/s/AKfycby9Ip2GyPgvW3OTpDbyCRV07QoylRLaLmFDstqQrPL5UBLbnrg-cc7NMnDYdM7Y6IfzXA/exec";
 
     const now = new Date();
     document.getElementById('current-date').innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('pub-time').innerText = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ' hôm nay';
 
-    // Trích xuất ID YouTube từ bất kỳ dạng link nào
+    // Trích xuất ID YouTube chuẩn xác 100%
     function extractYouTubeId(url) {
       if (!url) return "";
       url = url.trim();
-      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))([\w-]{11})/);
-      return (match && match[1]) ? match[1] : "";
+      if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+
+      const reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/|m\.youtube\.com\/watch\?v=)([^"&?\/\s]{11})/i;
+      const match = url.match(reg);
+      if (match && match[1]) return match[1];
+
+      const vParam = url.match(/[?&]v=([^&]+)/);
+      if (vParam && vParam[1] && vParam[1].length === 11) return vParam[1];
+
+      return "";
     }
 
     // Tải dữ liệu ngầm từ Google Sheets
@@ -228,7 +237,7 @@
         if (data.badge) document.getElementById('edit-badge').innerText = data.badge;
         if (data.author) document.getElementById('edit-author').innerText = data.author;
 
-        // Xử lý Video YouTube
+        // Xử lý nạp Video YouTube
         if (data.video && data.video.trim() !== "") {
           const vId = extractYouTubeId(data.video);
           if (vId) {
@@ -262,7 +271,7 @@
           const el = document.getElementById(id);
           if (el) el.contentEditable = "true";
         });
-        alert("🔓 Đã mở Admin Mode!");
+        alert("🔓 Đã mở chế độ Admin!");
       }
     });
 
@@ -280,7 +289,7 @@
       if (vId) {
         document.getElementById('youtube-iframe').src = "https://www.youtube.com/embed/" + vId;
         document.getElementById('video-box').style.display = "block";
-        alert("📺 Đã nhận diện được Video!");
+        alert("📺 Đã nhận diện thành công Video YouTube!");
       } else if (rawUrl === "") {
         removeVideo();
       } else {
@@ -302,8 +311,8 @@
         reader.onload = function(e) {
           const img = new Image();
           img.onload = function() {
-            let maxDim = 600;
-            let quality = 0.65;
+            let maxDim = 500;
+            let quality = 0.5;
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
@@ -319,15 +328,15 @@
             }
 
             let base64 = compress();
-            while (base64.length > 140000 && maxDim > 200) {
+            while (base64.length > 120000 && maxDim > 150) {
               maxDim -= 50;
-              quality -= 0.08;
+              quality -= 0.05;
               base64 = compress();
             }
 
             document.getElementById('main-img').src = base64;
             document.getElementById('img-url-input').value = "";
-            alert("📸 Chọn ảnh thành công! Đã tự động nén tối ưu dung lượng.");
+            alert("📸 Chọn và nén ảnh thành công!");
           };
           img.src = e.target.result;
         };
@@ -335,7 +344,7 @@
       }
     }
 
-    // Lưu nội dung + Ảnh + Video lên Google Sheets
+    // Lưu toàn bộ dữ liệu lên Google Sheets
     async function saveAndExit() {
       const saveBtn = document.getElementById('save-btn');
       saveBtn.innerText = "Đang lưu...";
@@ -345,7 +354,11 @@
       let videoEmbedUrl = "";
       if (rawVideoInput) {
         const vId = extractYouTubeId(rawVideoInput);
-        if (vId) videoEmbedUrl = "https://www.youtube.com/embed/" + vId;
+        if (vId) {
+          videoEmbedUrl = "https://www.youtube.com/embed/" + vId;
+        } else {
+          videoEmbedUrl = rawVideoInput;
+        }
       }
 
       const payload = {
@@ -374,10 +387,10 @@
         document.getElementById('admin-bar').classList.remove('active');
         document.body.classList.remove('editing');
 
-        alert("🌐 Đã lưu thành công cả Ảnh & Video lên Google Sheets mới!");
+        alert("🌐 Đã lưu bài viết, Ảnh & Video thành công lên Google Sheets!");
         fetchBackgroundData();
       } catch (err) {
-        alert("Có lỗi khi kết nối lưu dữ liệu: " + err);
+        alert("Có lỗi xảy ra khi lưu: " + err);
       } finally {
         saveBtn.innerText = "Lưu lên Google Sheets & Khóa";
         saveBtn.disabled = false;
