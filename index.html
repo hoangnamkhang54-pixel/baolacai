@@ -61,15 +61,13 @@
       padding: 7px 16px; border-radius: 4px; font-weight: bold; cursor: pointer;
     }
 
-    /* Top Bar */
+    /* Top Bar & Header */
     .top-bar {
       background: #0f172a; color: #94a3b8;
       font-size: 12px; padding: 6px 20px;
       display: flex; justify-content: space-between;
       max-width: 1100px; margin: 0 auto;
     }
-
-    /* Header & Navigation */
     header {
       background: #fff;
       border-bottom: 3px solid var(--primary);
@@ -83,116 +81,42 @@
       letter-spacing: -0.5px; cursor: pointer; user-select: none;
     }
     .logo span { color: #0f172a; }
-    .nav-bar {
-      background: #fff; border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .nav-container {
-      max-width: 1100px; margin: 0 auto; display: flex;
-      gap: 20px; padding: 0 20px; overflow-x: auto; white-space: nowrap;
-    }
-    .nav-container a {
-      color: #334155; text-decoration: none; font-weight: 600;
-      font-size: 14px; padding: 12px 0; border-bottom: 2px solid transparent;
-    }
-    .nav-container a.active, .nav-container a:hover {
-      color: var(--primary); border-bottom-color: var(--primary);
-    }
 
-    /* Main Content Layout */
+    .nav-bar { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .nav-container { max-width: 1100px; margin: 0 auto; display: flex; gap: 20px; padding: 0 20px; overflow-x: auto; }
+    .nav-container a { color: #334155; text-decoration: none; font-weight: 600; font-size: 14px; padding: 12px 0; }
+    .nav-container a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+
+    /* Content Layout */
     .main-wrapper {
       max-width: 1100px; margin: 20px auto; padding: 0 20px;
       display: grid; grid-template-columns: 1fr 320px; gap: 30px;
     }
-    @media (max-width: 850px) {
-      .main-wrapper { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 850px) { .main-wrapper { grid-template-columns: 1fr; } }
 
-    .article-box {
-      background: #fff; padding: 25px; border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-    .badge {
-      display: inline-block; background: var(--primary); color: #fff;
-      font-size: 11px; font-weight: 800; padding: 3px 8px;
-      border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    h1.title {
-      font-size: 28px; line-height: 1.35; margin: 10px 0 15px 0;
-      color: #0f172a; font-weight: 800;
-    }
-    .meta-info {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 13px; color: #64748b; padding-bottom: 15px;
-      border-bottom: 1px solid var(--border); margin-bottom: 20px;
-    }
-    .summary {
-      font-weight: 700; font-size: 17px; color: #334155;
-      line-height: 1.5; margin-bottom: 20px;
-    }
-    .cover-img {
-      width: 100%; max-height: 480px; object-fit: cover;
-      border-radius: 6px; display: block;
-    }
-    .img-caption {
-      font-size: 13px; color: #64748b; font-style: italic;
-      text-align: center; margin: 8px 0 20px 0;
-    }
+    .article-box { background: #fff; padding: 25px; border-radius: 8px; border: 1px solid var(--border); }
+    .badge { display: inline-block; background: var(--primary); color: #fff; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 3px; }
+    h1.title { font-size: 28px; line-height: 1.35; margin: 10px 0 15px 0; color: #0f172a; font-weight: 800; }
+    .meta-info { display: flex; justify-content: space-between; font-size: 13px; color: #64748b; padding-bottom: 15px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+    .summary { font-weight: 700; font-size: 17px; color: #334155; margin-bottom: 20px; }
+    
+    .cover-img { width: 100%; max-height: 480px; object-fit: cover; border-radius: 6px; display: block; }
+    .img-caption { font-size: 13px; color: #64748b; font-style: italic; text-align: center; margin: 8px 0 20px 0; }
 
-    /* Khung Video YouTube Responsive 16:9 */
+    /* Khung Video 16:9 */
     .video-wrapper {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #000;
-      margin-bottom: 20px;
-      display: none;
+      position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
+      overflow: hidden; border-radius: 8px; background: #000; margin-bottom: 20px; display: none;
     }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: 0;
-    }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
     .content p { font-size: 16.5px; margin-bottom: 18px; color: #1e293b; }
-    blockquote {
-      border-left: 4px solid var(--primary); margin: 20px 0;
-      padding: 12px 18px; background: #fff1f2; font-style: italic;
-      color: #881337; font-weight: 500;
-    }
-
-    /* Sidebar */
-    .sidebar { display: flex; flex-direction: column; gap: 20px; }
-    .widget {
-      background: #fff; padding: 18px; border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-    .widget-title {
-      font-size: 16px; font-weight: 800; color: #0f172a;
-      border-bottom: 2px solid var(--primary); padding-bottom: 8px;
-      margin-bottom: 15px; text-transform: uppercase;
-    }
-    .news-item {
-      display: flex; gap: 10px; margin-bottom: 12px;
-      text-decoration: none; color: inherit;
-    }
-    .news-item img { width: 80px; height: 55px; object-fit: cover; border-radius: 4px; }
-    .news-item h4 { font-size: 13.5px; margin: 0; line-height: 1.3; font-weight: 600; color: #334155; }
 
     .editing [contenteditable="true"] {
-      outline: 2px dashed #3b82f6 !important;
-      background: rgba(59, 130, 246, 0.05);
-      border-radius: 3px; padding: 2px 4px;
+      outline: 2px dashed #3b82f6 !important; background: rgba(59, 130, 246, 0.05); padding: 2px 4px;
     }
 
-    footer {
-      background: #0f172a; color: #94a3b8; padding: 30px 20px;
-      font-size: 13px; margin-top: 40px; text-align: center;
-    }
+    footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; font-size: 13px; margin-top: 40px; text-align: center; }
   </style>
 </head>
 <body>
@@ -201,17 +125,14 @@
   <div id="admin-bar">
     <span>🔓 <strong>ADMIN MODE</strong></span>
     <div class="admin-controls">
-      <!-- Tải ảnh máy -->
       <label class="btn-action" style="cursor:pointer;">
         📁 Chọn ảnh máy
         <input type="file" id="img-file-input" accept="image/*" style="display:none;" onchange="handleBinaryImageUpload(this)">
       </label>
       
-      <!-- Hoặc Dán Link Ảnh -->
-      <input type="text" id="img-url-input" placeholder="Dán link ảnh...">
-      <button class="btn-action" onclick="applyImageUrl()">Đổi Ảnh</button>
+      <input type="text" id="img-url-input" placeholder="Hoặc dán link ảnh...">
+      <button class="btn-action" onclick="applyImageUrl()">Đổi Ảnh Link</button>
 
-      <!-- Dán Link YouTube -->
       <input type="text" id="youtube-input" placeholder="Dán link YouTube...">
       <button class="btn-action" onclick="applyYouTubeVideo()">Xem trước Video</button>
       <button class="btn-danger" onclick="removeVideo()">Xóa Video</button>
@@ -226,7 +147,7 @@
   </div>
 
   <header>
-    <!-- Bấm 4 lần liên tiếp vào logo để mở Admin Mode -->
+    <!-- Nhấp 4 lần liên tiếp vào logo để mở trang Admin -->
     <div class="logo" id="logo-trigger">TIN TỨC <span>24H</span></div>
     <div style="font-size:13px; color:#64748b;">Nhiệt độ: 26°C | Hà Nội</div>
   </header>
@@ -238,8 +159,6 @@
       <a href="#">Pháp luật</a>
       <a href="#">Giải trí</a>
       <a href="#">Thể thao</a>
-      <a href="#">Công nghệ</a>
-      <a href="#">Đời sống</a>
     </div>
   </nav>
 
@@ -255,13 +174,13 @@
 
       <div class="summary" id="edit-summary">Đang tải tóm tắt...</div>
 
-      <!-- Ảnh chính bài viết -->
+      <!-- Ảnh bài viết -->
       <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800" id="main-img" alt="Hình ảnh bài viết" class="cover-img">
       <div class="img-caption" id="edit-caption">Đang tải chú thích...</div>
 
-      <!-- Khung Video YouTube Nhúng -->
+      <!-- Khung Video YouTube -->
       <div class="video-wrapper" id="video-box">
-        <iframe id="youtube-iframe" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe id="youtube-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
 
       <div class="content" id="edit-content">
@@ -269,58 +188,47 @@
       </div>
     </main>
 
-    <aside class="sidebar">
-      <div class="widget">
-        <div class="widget-title">Đọc nhiều nhất</div>
-        <a href="#" class="news-item">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=120" alt="thumb">
-          <h4>Món ăn bí ẩn biến mất sau 5 phút mở tủ lạnh</h4>
-        </a>
-        <a href="#" class="news-item">
-          <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=120" alt="thumb">
-          <h4>Bắt quả tang hành vi lén lút thức đêm ăn mì</h4>
-        </a>
-      </div>
+    <aside style="background:#fff; padding:18px; border-radius:8px; border:1px solid var(--border); height:fit-content;">
+      <h3 style="margin-top:0; border-bottom:2px solid var(--primary); padding-bottom:8px;">TIN ĐỌC NHIỀU</h3>
+      <p style="font-size:14px; font-weight:600;">• Món ăn bí ẩn biến mất trong tủ lạnh</p>
+      <p style="font-size:14px; font-weight:600;">• Bắt quả tang lén lút thức đêm ăn mì</p>
     </aside>
   </div>
 
   <footer>
     <p><strong>BÁO ĐIỆN TỬ TIN TỨC 24H</strong></p>
-    <p>© 2026 Bản quyền thuộc về Tin Tức 24H. Mọi hình thức sao chép phải có sự đồng ý.</p>
   </footer>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz_n5QlmoCI4-rvsTXviVTGoSdijNjHJIoQXM7_GEPQ4Qbk2bJy_OccsCR9jMR8acxq/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycby2wjZp-Bs5U6JUPhfSe69QKZ4g6pMNLu-CtzO6sIAyeg3LGIZpyO9MH3mN5pAJJ-cW5w/exec";
 
     const now = new Date();
     document.getElementById('current-date').innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('pub-time').innerText = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ' hôm nay';
 
-    // Trích xuất ID YouTube chuẩn
+    // Trích xuất ID YouTube từ bất kỳ dạng link nào
     function extractYouTubeId(url) {
       if (!url) return "";
       url = url.trim();
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : "";
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))([\w-]{11})/);
+      return (match && match[1]) ? match[1] : "";
     }
 
-    // Tải dữ liệu từ Google Sheets
+    // Tải dữ liệu ngầm từ Google Sheets
     async function fetchBackgroundData() {
       try {
-        const noCacheUrl = API_URL + "?t=" + Date.now();
-        const res = await fetch(noCacheUrl, { cache: 'no-store' });
+        const res = await fetch(API_URL + "?t=" + Date.now(), { cache: 'no-store' });
         const data = await res.json();
 
         if (data.title) document.getElementById('edit-title').innerText = data.title;
         if (data.summary) document.getElementById('edit-summary').innerText = data.summary;
         if (data.caption) document.getElementById('edit-caption').innerText = data.caption;
         if (data.content) document.getElementById('edit-content').innerHTML = data.content;
-        if (data.img) document.getElementById('main-img').src = data.img;
+        if (data.img && data.img.length > 20) document.getElementById('main-img').src = data.img;
         if (data.badge) document.getElementById('edit-badge').innerText = data.badge;
         if (data.author) document.getElementById('edit-author').innerText = data.author;
 
-        // Tải Video
+        // Xử lý Video YouTube
         if (data.video && data.video.trim() !== "") {
           const vId = extractYouTubeId(data.video);
           if (vId) {
@@ -337,7 +245,7 @@
     }
     fetchBackgroundData();
 
-    // Nhấp 4 lần liên tiếp vào logo để bật Admin Mode
+    // Bật Admin Mode (Nhấp 4 lần liên tiếp vào Logo)
     let logoClickCount = 0;
     let logoClickTimer = null;
     document.getElementById('logo-trigger').addEventListener('click', () => {
@@ -348,25 +256,21 @@
       if (logoClickCount === 4) {
         clearTimeout(logoClickTimer);
         logoClickCount = 0;
-        enableAdminMode();
+        document.getElementById('admin-bar').classList.add('active');
+        document.body.classList.add('editing');
+        ['edit-title', 'edit-summary', 'edit-caption', 'edit-content', 'edit-badge', 'edit-author'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.contentEditable = "true";
+        });
+        alert("🔓 Đã mở Admin Mode!");
       }
     });
-
-    function enableAdminMode() {
-      document.getElementById('admin-bar').classList.add('active');
-      document.body.classList.add('editing');
-      ['edit-title', 'edit-summary', 'edit-caption', 'edit-content', 'edit-badge', 'edit-author'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.contentEditable = "true";
-      });
-      alert("🔓 Mở chế độ Admin thành công!");
-    }
 
     function applyImageUrl() {
       const url = document.getElementById('img-url-input').value.trim();
       if (url) {
         document.getElementById('main-img').src = url;
-        alert("🖼️ Đã đổi ảnh mới!");
+        alert("🖼️ Đã đổi ảnh link!");
       }
     }
 
@@ -376,7 +280,7 @@
       if (vId) {
         document.getElementById('youtube-iframe').src = "https://www.youtube.com/embed/" + vId;
         document.getElementById('video-box').style.display = "block";
-        alert("📺 Đã nhận diện Video YouTube!");
+        alert("📺 Đã nhận diện được Video!");
       } else if (rawUrl === "") {
         removeVideo();
       } else {
@@ -388,40 +292,42 @@
       document.getElementById('youtube-iframe').src = "";
       document.getElementById('video-box').style.display = "none";
       document.getElementById('youtube-input').value = "";
-      alert("🗑️️ Đã xóa Video!");
+      alert("🗑 Đã xóa Video!");
     }
 
-    // Tự động xử lý ảnh từ máy (Dung lượng lớn chia làm nhiều ô)
+    // Tự động nén ảnh từ máy
     function handleBinaryImageUpload(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
           const img = new Image();
           img.onload = function() {
+            let maxDim = 600;
+            let quality = 0.65;
             const canvas = document.createElement('canvas');
-            let w = img.width;
-            let h = img.height;
-            const maxDim = 800;
-
-            if (w > maxDim || h > maxDim) {
-              if (w > h) {
-                h = Math.round((h * maxDim) / w);
-                w = maxDim;
-              } else {
-                w = Math.round((w * maxDim) / h);
-                h = maxDim;
-              }
-            }
-            canvas.width = w;
-            canvas.height = h;
-
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
 
-            const base64 = canvas.toDataURL('image/jpeg', 0.8);
+            function compress() {
+              let w = img.width, h = img.height;
+              if (w > maxDim || h > maxDim) {
+                if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+                else { w = Math.round((w * maxDim) / h); h = maxDim; }
+              }
+              canvas.width = w; canvas.height = h;
+              ctx.drawImage(img, 0, 0, w, h);
+              return canvas.toDataURL('image/jpeg', quality);
+            }
+
+            let base64 = compress();
+            while (base64.length > 140000 && maxDim > 200) {
+              maxDim -= 50;
+              quality -= 0.08;
+              base64 = compress();
+            }
+
             document.getElementById('main-img').src = base64;
             document.getElementById('img-url-input').value = "";
-            alert("📸 Đã chọn và tối ưu hóa ảnh thành công!");
+            alert("📸 Chọn ảnh thành công! Đã tự động nén tối ưu dung lượng.");
           };
           img.src = e.target.result;
         };
@@ -429,7 +335,7 @@
       }
     }
 
-    // Lưu toàn bộ dữ liệu lên Google Sheets
+    // Lưu nội dung + Ảnh + Video lên Google Sheets
     async function saveAndExit() {
       const saveBtn = document.getElementById('save-btn');
       saveBtn.innerText = "Đang lưu...";
@@ -468,10 +374,10 @@
         document.getElementById('admin-bar').classList.remove('active');
         document.body.classList.remove('editing');
 
-        alert("🌐 Đã lưu bài viết, Ảnh và Video thành công lên Google Sheets!");
+        alert("🌐 Đã lưu thành công cả Ảnh & Video lên Google Sheets mới!");
         fetchBackgroundData();
       } catch (err) {
-        alert("Có lỗi xảy ra khi lưu: " + err);
+        alert("Có lỗi khi kết nối lưu dữ liệu: " + err);
       } finally {
         saveBtn.innerText = "Lưu lên Google Sheets & Khóa";
         saveBtn.disabled = false;
