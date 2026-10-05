@@ -147,7 +147,7 @@
   </div>
 
   <header>
-    <!-- Bấm 4 lần liên tiếp vào logo để mở Admin Mode -->
+    <!-- Nhấp 4 lần liên tiếp vào logo để mở Admin Mode -->
     <div class="logo" id="logo-trigger">TIN TỨC <span>24H</span></div>
     <div style="font-size:13px; color:#64748b;">Nhiệt độ: 26°C | Hà Nội</div>
   </header>
@@ -200,14 +200,13 @@
   </footer>
 
   <script>
-    // URL Google Apps Script mới nhất
-    const API_URL = "https://script.google.com/macros/s/AKfycby9Ip2GyPgvW3OTpDbyCRV07QoylRLaLmFDstqQrPL5UBLbnrg-cc7NMnDYdM7Y6IfzXA/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzoJjwS9GpLo5TPGfzHDn-8j1WtLT2xZpwO8GPoJX_j0CugDEVKcavKC_gQJ1o05pQWxQ/exec";
 
     const now = new Date();
     document.getElementById('current-date').innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('pub-time').innerText = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ' hôm nay';
 
-    // Trích xuất ID YouTube chuẩn xác 100%
+    // Trích xuất ID YouTube từ mọi định dạng link
     function extractYouTubeId(url) {
       if (!url) return "";
       url = url.trim();
@@ -223,7 +222,7 @@
       return "";
     }
 
-    // Tải dữ liệu ngầm từ Google Sheets
+    // Tải dữ liệu từ Google Sheets
     async function fetchBackgroundData() {
       try {
         const res = await fetch(API_URL + "?t=" + Date.now(), { cache: 'no-store' });
@@ -237,7 +236,6 @@
         if (data.badge) document.getElementById('edit-badge').innerText = data.badge;
         if (data.author) document.getElementById('edit-author').innerText = data.author;
 
-        // Xử lý nạp Video YouTube
         if (data.video && data.video.trim() !== "") {
           const vId = extractYouTubeId(data.video);
           if (vId) {
@@ -254,7 +252,7 @@
     }
     fetchBackgroundData();
 
-    // Bật Admin Mode (Nhấp 4 lần liên tiếp vào Logo)
+    // Mở Admin Mode (Nhấp 4 lần liên tiếp vào logo)
     let logoClickCount = 0;
     let logoClickTimer = null;
     document.getElementById('logo-trigger').addEventListener('click', () => {
@@ -304,7 +302,7 @@
       alert("🗑 Đã xóa Video!");
     }
 
-    // Tự động nén ảnh từ máy
+    // Nén ảnh từ máy trước khi tải lên
     function handleBinaryImageUpload(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -344,7 +342,7 @@
       }
     }
 
-    // Lưu toàn bộ dữ liệu lên Google Sheets
+    // Đồng bộ trực tiếp lên Google Sheets theo phương thức Batch
     async function saveAndExit() {
       const saveBtn = document.getElementById('save-btn');
       saveBtn.innerText = "Đang lưu...";
@@ -387,7 +385,7 @@
         document.getElementById('admin-bar').classList.remove('active');
         document.body.classList.remove('editing');
 
-        alert("🌐 Đã lưu bài viết, Ảnh & Video thành công lên Google Sheets!");
+        alert("🌐 Đã lưu bài viết, Ảnh & Video thành công!");
         fetchBackgroundData();
       } catch (err) {
         alert("Có lỗi xảy ra khi lưu: " + err);
